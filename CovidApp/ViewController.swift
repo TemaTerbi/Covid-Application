@@ -183,7 +183,8 @@ class ViewController: UIViewController {
     
     @objc private func showMainScreen(sender: UIButton) {
         let mainViewController: MainViewController = MainViewController()
-        self.present(mainViewController, animated: true)
+        mainViewController.modalPresentationStyle = .fullScreen
+        self.show(mainViewController, sender: self)
     }
 }
 

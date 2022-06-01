@@ -8,9 +8,12 @@
 import UIKit
 
 class MainViewController: UIViewController {
+    
+    private var mainBackgroundColor: UIColor? = UIColor(hex: 0x9A9696)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = mainBackgroundColor
 
         // Do any additional setup after loading the view.
     }
