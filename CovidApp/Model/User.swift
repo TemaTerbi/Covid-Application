@@ -15,6 +15,8 @@ protocol UserProtocol {
 
 class User: UserProtocol {
     
+    var storage = UserDefaults.standard
+    
     var name: String
     var age: Int
     
@@ -22,4 +24,11 @@ class User: UserProtocol {
         self.name = name
         self.age = age
     }
+    
+    func test() {
+        storage.set(self.name, forKey: "Name")
+        storage.set(self.age, forKey: "Age")
+    }
+    
+    
 }

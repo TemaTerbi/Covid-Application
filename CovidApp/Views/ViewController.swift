@@ -182,6 +182,10 @@ class ViewController: UIViewController {
     }
     
     @objc private func showMainScreen(sender: UIButton) {
+        let name = nameTextField.text!
+        let age = Int(ageTextField.text!)
+        let user = User(name: name, age: age!)
+        user.test()
         let mainViewController: TabViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen
         self.show(mainViewController, sender: self)
