@@ -38,6 +38,7 @@ class ViewController: UIViewController {
             string: "Возраст",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.black]
         )
+        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -69,6 +70,7 @@ class ViewController: UIViewController {
         continueButton.layer.cornerRadius = 21
         continueButton.setTitle("Продолжить", for: .normal)
         continueButton.backgroundColor = btnColor
+        continueButton.addTarget(self, action: #selector(showMainScreen), for: .touchUpInside)
         return continueButton
     }()
     
@@ -95,6 +97,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        nameTextField.delegate = self
+        ageTextField.delegate = self
         addSubviews()
         setupConstraints()
     }
@@ -175,6 +179,29 @@ class ViewController: UIViewController {
             sender.isSelected = true
             radioBtn.isSelected = false
         }
+    }
+    
+    @objc private func showMainScreen(sender: UIButton) {
+        let mainViewController: MainViewController = MainViewController()
+        self.present(mainViewController, animated: true)
+    }
+}
+
+//Делегаты скрытия клавиатуры с экрана по тапу на экран и по кнопке return переход к следующему textfield
+extension ViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        self.view.endEditing(true)
+        
+        nameTextField.resignFirstResponder()
+        ageTextField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        ageTextField.becomeFirstResponder()
+        return true
     }
 }
       
