@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     private let colorOfTextField: UIColor? = UIColor(hex: 0xD9D9D9)
     private let btnColor: UIColor? = UIColor(hex: 0x6F6060)
+    private let radioButtonIsSelecredColor: UIColor? = UIColor(hex: 0xB8FFBF)
     
     private lazy var nameTextField: UITextField = {
         let textField = UITextField()
@@ -45,8 +46,8 @@ class ViewController: UIViewController {
         radioBtn.translatesAutoresizingMaskIntoConstraints = false
         radioBtn.backgroundColor = colorOfTextField
         radioBtn.layer.cornerRadius = 15
-        radioBtn.setTitle("M", for: .normal)
-        radioBtn.setTitleColor(colorOfTextField, for: .normal)
+        radioBtn.addTarget(self, action: #selector(maleTapRadioButton), for: .touchUpInside)
+        radioBtn.tintColor = radioButtonIsSelecredColor
         return radioBtn
     }()
     
@@ -55,8 +56,9 @@ class ViewController: UIViewController {
         radioBtn.translatesAutoresizingMaskIntoConstraints = false
         radioBtn.backgroundColor = colorOfTextField
         radioBtn.layer.cornerRadius = 15
-        radioBtn.setTitle("Ж", for: .normal)
-        radioBtn.setTitleColor(colorOfTextField, for: .normal)
+        radioBtn.addTarget(self, action: #selector(feMaleTapRadioButton), for: .touchUpInside)
+        radioBtn.tintColor = radioButtonIsSelecredColor
+        radioBtn.tintAdjustmentMode = .normal
         return radioBtn
     }()
     
@@ -123,9 +125,13 @@ class ViewController: UIViewController {
             
             radioBtn.topAnchor.constraint(equalTo: ageTextField.bottomAnchor,constant: 20),
             radioBtn.leadingAnchor.constraint(equalTo: ageTextField.leadingAnchor),
+            radioBtn.widthAnchor.constraint(equalToConstant: 30),
+            radioBtn.heightAnchor.constraint(equalToConstant: 30),
             
             radioBtnTwo.topAnchor.constraint(equalTo: radioBtn.topAnchor),
             radioBtnTwo.leadingAnchor.constraint(equalTo: radioBtn.trailingAnchor, constant: 60),
+            radioBtnTwo.widthAnchor.constraint(equalTo: radioBtn.widthAnchor),
+            radioBtnTwo.heightAnchor.constraint(equalTo: radioBtn.heightAnchor),
             
             continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -147,6 +153,29 @@ class ViewController: UIViewController {
         
     }
     
+    //MARK: - Helper Methods
+    
+    @objc private func maleTapRadioButton(sender: UIButton) {
+        
+        if sender.isSelected {
+            sender.isSelected = false
+            radioBtnTwo.isSelected = false
+        } else {
+            sender.isSelected = true
+            radioBtnTwo.isSelected = false
+        }
+    }
+    
+    @objc private func feMaleTapRadioButton(sender: UIButton) {
+        
+        if sender.isSelected {
+            sender.isSelected = false
+            radioBtn.isSelected = false
+        } else {
+            sender.isSelected = true
+            radioBtn.isSelected = false
+        }
+    }
 }
       
 //Создаю расширение для UIColor, чтобы он принимал HEX кодировку (взял со stackoverflow)
