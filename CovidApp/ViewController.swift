@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         radioBtn.backgroundColor = colorOfTextField
         radioBtn.layer.cornerRadius = 15
         radioBtn.setTitle("M", for: .normal)
-        radioBtn.tintColor = .black
+        radioBtn.setTitleColor(colorOfTextField, for: .normal)
         return radioBtn
     }()
     
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         radioBtn.backgroundColor = colorOfTextField
         radioBtn.layer.cornerRadius = 15
         radioBtn.setTitle("Ж", for: .normal)
-        radioBtn.tintColor = .black
+        radioBtn.setTitleColor(colorOfTextField, for: .normal)
         return radioBtn
     }()
     
@@ -68,6 +68,24 @@ class ViewController: UIViewController {
         continueButton.setTitle("Продолжить", for: .normal)
         continueButton.backgroundColor = btnColor
         return continueButton
+    }()
+    
+    private lazy var maleText: UILabel = {
+        let text = UILabel()
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.text = "M"
+        text.font = UIFont.systemFont(ofSize: 14)
+        text.textAlignment = .center
+        return text
+    }()
+    
+    private lazy var feMaleText: UILabel = {
+        let text = UILabel()
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.text = "Ж"
+        text.font = UIFont.systemFont(ofSize: 14)
+        text.textAlignment = .center
+        return text
     }()
     
 
@@ -86,6 +104,8 @@ class ViewController: UIViewController {
         self.view.addSubview(radioBtn)
         self.view.addSubview(radioBtnTwo)
         self.view.addSubview(continueButton)
+        self.view.addSubview(maleText)
+        self.view.addSubview(feMaleText)
     }
     
     private func setupConstraints() {
@@ -111,6 +131,16 @@ class ViewController: UIViewController {
             continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             continueButton.widthAnchor.constraint(equalToConstant: 310),
             continueButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            maleText.topAnchor.constraint(equalTo: ageTextField.bottomAnchor, constant: 28),
+            maleText.leadingAnchor.constraint(equalTo: radioBtn.trailingAnchor, constant: 20),
+            maleText.widthAnchor.constraint(equalToConstant: 15),
+            maleText.heightAnchor.constraint(equalToConstant: 15),
+            
+            feMaleText.topAnchor.constraint(equalTo: ageTextField.bottomAnchor, constant: 28),
+            feMaleText.leadingAnchor.constraint(equalTo: radioBtnTwo.trailingAnchor, constant: 20),
+            feMaleText.widthAnchor.constraint(equalToConstant: 15),
+            feMaleText.heightAnchor.constraint(equalToConstant: 15),
         ]
         
         NSLayoutConstraint.activate(constraints)
