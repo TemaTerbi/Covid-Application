@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     }()
     
 
-    // MARK: - Life Cicle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -181,11 +181,67 @@ class ViewController: UIViewController {
         }
     }
     
+    private func validationIsEmpty(firstField: String, secondField: String) {
+        if firstField.isEmpty {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы не ввели имя!",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        }
+        
+        if secondField.isEmpty {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы не ввели возраст!",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        }
+    }
+    
+    private func checkGenderSelect() {
+        if !radioBtn.isSelected && !radioBtnTwo.isSelected {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Выберите пол",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        } 
+    }
+    
+    private func validationAgeField(field: String) -> Int {
+        var ageNum: Int = 0
+        if let age = Int(field) {
+            ageNum = age
+        } else {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы ввели не корректный возраст",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+        }
+        return ageNum
+    }
+    
     @objc private func showMainScreen(sender: UIButton) {
-        let name = nameTextField.text!
-        let age = Int(ageTextField.text!)
-        let user = User(name: name, age: age!)
-        user.test()
+        let nameField = nameTextField.text!
+        let ageField = ageTextField.text!
+        validationIsEmpty(firstField: nameField, secondField: ageField)
+        let age = validationAgeField(field: ageField)
+        checkGenderSelect()
+        let user = User(name: nameField, age: age)
+        user.saveFields()
         let mainViewController: TabViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen
         self.show(mainViewController, sender: self)

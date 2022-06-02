@@ -25,7 +25,7 @@ class User: UserProtocol {
         self.age = age
     }
     
-    func test() {
+    func saveFields() {
         storage.set(self.name, forKey: "Name")
         storage.set(self.age, forKey: "Age")
     }

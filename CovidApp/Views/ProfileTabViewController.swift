@@ -29,6 +29,7 @@ class ProfileTabViewController: UIViewController {
         return lable
     }()
 
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray
@@ -41,6 +42,7 @@ class ProfileTabViewController: UIViewController {
         self.view.addSubview(ageLable)
     }
     
+    //MARK: - Private Methods
     private func setupConstraints() {
         
         let constraints = [
