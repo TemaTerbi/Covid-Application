@@ -215,7 +215,7 @@ class ViewController: UIViewController {
             alertController.addAction(btnOk)
             self.present(alertController, animated: true)
             return
-        } 
+        }
     }
     
     private func validationAgeField(field: String) -> Int {
@@ -234,13 +234,24 @@ class ViewController: UIViewController {
         return ageNum
     }
     
+    private func whichGenderSelected() -> String {
+        var gender = ""
+        if radioBtn.isSelected {
+            gender = "Мужчина"
+        } else if radioBtnTwo.isSelected {
+            gender = "Женщина"
+        }
+        return gender
+    }
+    
     @objc private func showMainScreen(sender: UIButton) {
         let nameField = nameTextField.text!
         let ageField = ageTextField.text!
         validationIsEmpty(firstField: nameField, secondField: ageField)
         let age = validationAgeField(field: ageField)
         checkGenderSelect()
-        let user = User(name: nameField, age: age)
+        let gender = whichGenderSelected()
+        let user = User(name: nameField, age: age, gender: gender)
         user.saveFields()
         let mainViewController: TabViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen

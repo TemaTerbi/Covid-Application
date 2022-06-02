@@ -28,6 +28,15 @@ class ProfileTabViewController: UIViewController {
         lable.textAlignment = .center
         return lable
     }()
+    
+    lazy private var genderLable: UILabel = {
+        var lable = UILabel()
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.text = storage.string(forKey: "Gender")
+        lable.font = UIFont.systemFont(ofSize: 14)
+        lable.textAlignment = .center
+        return lable
+    }()
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -40,6 +49,7 @@ class ProfileTabViewController: UIViewController {
     private func addSubviews() {
         self.view.addSubview(nameLable)
         self.view.addSubview(ageLable)
+        self.view.addSubview(genderLable)
     }
     
     //MARK: - Private Methods
@@ -55,6 +65,11 @@ class ProfileTabViewController: UIViewController {
             ageLable.centerYAnchor.constraint(equalTo: nameLable.centerYAnchor, constant: 30),
             ageLable.widthAnchor.constraint(equalToConstant: 310),
             ageLable.heightAnchor.constraint(equalToConstant: 35),
+            
+            genderLable.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            genderLable.centerYAnchor.constraint(equalTo: ageLable.centerYAnchor, constant: 30),
+            genderLable.widthAnchor.constraint(equalToConstant: 310),
+            genderLable.heightAnchor.constraint(equalToConstant: 35),
         ]
         
         NSLayoutConstraint.activate(constraints)
