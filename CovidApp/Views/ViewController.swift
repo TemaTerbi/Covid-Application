@@ -66,7 +66,6 @@ class ViewController: UIViewController {
     private lazy var continueButton: UIButton = {
         let continueButton = UIButton()
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.backgroundColor = colorOfTextField
         continueButton.layer.cornerRadius = 21
         continueButton.setTitle("Продолжить", for: .normal)
         continueButton.backgroundColor = btnColor

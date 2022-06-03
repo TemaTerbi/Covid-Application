@@ -14,8 +14,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        setupWindow(scene: scene)
-        storage.set(false, forKey: "Login")
+        if storage.bool(forKey: "Login") {
+            setupWindow(scene: scene)
+        } else {
+            setupWindow(scene: scene)
+            storage.set(false, forKey: "Login")
+        }
     }
     
     
@@ -23,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func setupWindow(scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let controller = TabViewController()
+        let controller = TabViewController()  //prod TabViewController()
         window?.rootViewController = controller
         window?.makeKeyAndVisible()
     }
