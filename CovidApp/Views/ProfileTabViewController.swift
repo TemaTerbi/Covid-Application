@@ -14,7 +14,7 @@ final class ProfileTabViewController: UIViewController {
     
     private let storage = UserDefaults.standard
     
-    private lazy  var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = storage.string(forKey: "Name")
@@ -26,7 +26,7 @@ final class ProfileTabViewController: UIViewController {
         return label
     }()
     
-    private lazy  var ageLable: UILabel = {
+    private lazy var ageLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = storage.string(forKey: "Age")
@@ -38,7 +38,7 @@ final class ProfileTabViewController: UIViewController {
         return label
     }()
     
-    private lazy  var genderLable: UILabel = {
+    private lazy var genderLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = storage.string(forKey: "Gender")

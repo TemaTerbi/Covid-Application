@@ -15,8 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         setupWindow(scene: scene)
-        if storage.bool(forKey: "Login") {
-        } else {
+        if !storage.bool(forKey: "Login") {
             storage.set(false, forKey: "Login")
         }
     }
