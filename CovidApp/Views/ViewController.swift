@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    private let colorOfTextField: UIColor? = UIColor(hex: 0xD9D9D9)
-    private let btnColor: UIColor? = UIColor(hex: 0x6F6060)
+    private let colorOfTextField: UIColor = UIColor(hex: 0xD9D9D9)
+    private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let radioButtonIsSelecredColor: UIColor? = UIColor(hex: 0xB8FFBF)
     
     private lazy var nameTextField: UITextField = {
@@ -219,7 +219,7 @@ class ViewController: UIViewController {
     }
     
     private func validationAgeField(field: String) -> Int {
-        var ageNum: Int = 0
+        var ageNum = 0
         if let age = Int(field) {
             ageNum = age
         } else {
@@ -244,7 +244,7 @@ class ViewController: UIViewController {
         return gender
     }
     
-    @objc private func showMainScreen(sender: UIButton) {
+    private func loginInApp() {
         let nameField = nameTextField.text!
         let ageField = ageTextField.text!
         validationIsEmpty(firstField: nameField, secondField: ageField)
@@ -253,6 +253,10 @@ class ViewController: UIViewController {
         let gender = whichGenderSelected()
         let user = User(name: nameField, age: age, gender: gender)
         user.saveFields()
+    }
+    
+    @objc private func showMainScreen(sender: UIButton) {
+        loginInApp()
         let mainViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen
         self.show(mainViewController, sender: self)

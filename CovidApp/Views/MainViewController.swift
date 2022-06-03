@@ -7,12 +7,11 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     
-    private var storage = UserDefaults.standard
+    private let storage = UserDefaults.standard
     
     override func viewDidAppear(_ animated: Bool) {
-        print(storage.bool(forKey: "Login"))
         if storage.bool(forKey: "Login") == false {
             storage.set(true, forKey: "Login")
             let loginVC: ViewController = ViewController()
@@ -21,7 +20,6 @@ class MainViewController: UIViewController {
         } else {
             return
         }
-        print(storage.bool(forKey: "Login"))
     }
     
     override func viewDidLoad() {

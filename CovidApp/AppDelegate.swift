@@ -10,8 +10,8 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    private let tintColorForTabs: UIColor? = UIColor(hex: 0x362F2F)
-    private let statusBarColor: UIColor? = UIColor(red: 95/255.0, green: 80/255.0, blue: 80/255.0, alpha: 1)
+    private let tintColorForTabs: UIColor = UIColor(hex: 0x362F2F)
+    private let statusBarColor: UIColor = UIColor(red: 95/255.0, green: 80/255.0, blue: 80/255.0, alpha: 1)
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
