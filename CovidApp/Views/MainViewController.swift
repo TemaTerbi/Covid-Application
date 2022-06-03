@@ -9,9 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    var storage = UserDefaults.standard
-    
-    private var mainBackgroundColor: UIColor? = UIColor(hex: 0x9A9696)
+    private var storage = UserDefaults.standard
     
     override func viewDidAppear(_ animated: Bool) {
         print(storage.bool(forKey: "Login"))
@@ -28,7 +26,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = mainBackgroundColor
+        view.backgroundColor = .systemGray5
     }
 }
 

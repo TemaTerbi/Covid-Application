@@ -68,6 +68,7 @@ class ViewController: UIViewController {
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.layer.cornerRadius = 21
         continueButton.setTitle("Продолжить", for: .normal)
+        continueButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         continueButton.backgroundColor = btnColor
         continueButton.addTarget(self, action: #selector(showMainScreen), for: .touchUpInside)
         return continueButton
@@ -252,7 +253,7 @@ class ViewController: UIViewController {
         let gender = whichGenderSelected()
         let user = User(name: nameField, age: age, gender: gender)
         user.saveFields()
-        let mainViewController: TabViewController = TabViewController()
+        let mainViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen
         self.show(mainViewController, sender: self)
     }
@@ -279,9 +280,9 @@ extension ViewController: UITextFieldDelegate {
 //Создаю расширение для UIColor, чтобы он принимал HEX кодировку (взял со stackoverflow)
 extension UIColor {
        convenience init(red: Int, green: Int, blue: Int) {
-           assert(red >= 0 && red <= 255, "Invalid red component")
-           assert(green >= 0 && green <= 255, "Invalid green component")
-           assert(blue >= 0 && blue <= 255, "Invalid blue component")
+           assert(red >= 0 && red <= 255, "Некорректный красный цвет")
+           assert(green >= 0 && green <= 255, "Некорректный зеленый цвет")
+           assert(blue >= 0 && blue <= 255, "Некорректный синий цвет")
 
            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
        }

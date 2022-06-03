@@ -7,13 +7,14 @@
 
 import UIKit
 
-class TabViewController: UITabBarController{
+class TabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.barTintColor = UIColor.red
         let MainVC = MainViewController()
         let icon1 = UITabBarItem(title: "Главная", image: UIImage(named: "HomeTab"), tag: 0)
         MainVC.tabBarItem = icon1
@@ -24,3 +25,4 @@ class TabViewController: UITabBarController{
         self.viewControllers = controllers
     }
 }
+
