@@ -9,11 +9,13 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    private let tintColorForTabs: UIColor? = UIColor(hex: 0x362F2F)
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        UITabBar.appearance().tintColor = tintColorForTabs
+       
         
         return true
     }
