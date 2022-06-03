@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    private let colorOfTextField: UIColor? = UIColor(hex: 0xD9D9D9)
-    private let btnColor: UIColor? = UIColor(hex: 0x6F6060)
+    private let colorOfTextField: UIColor = UIColor(hex: 0xD9D9D9)
+    private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let radioButtonIsSelecredColor: UIColor? = UIColor(hex: 0xB8FFBF)
     
     private lazy var nameTextField: UITextField = {
@@ -66,9 +66,9 @@ class ViewController: UIViewController {
     private lazy var continueButton: UIButton = {
         let continueButton = UIButton()
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.backgroundColor = colorOfTextField
         continueButton.layer.cornerRadius = 21
         continueButton.setTitle("Продолжить", for: .normal)
+        continueButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         continueButton.backgroundColor = btnColor
         continueButton.addTarget(self, action: #selector(showMainScreen), for: .touchUpInside)
         return continueButton
@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     }()
     
 
-    // MARK: - Life Cicle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -181,8 +181,83 @@ class ViewController: UIViewController {
         }
     }
     
+    private func validationIsEmpty(firstField: String, secondField: String) {
+        if firstField.isEmpty {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы не ввели имя!",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        }
+        
+        if secondField.isEmpty {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы не ввели возраст!",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        }
+    }
+    
+    private func checkGenderSelect() {
+        if !radioBtn.isSelected && !radioBtnTwo.isSelected {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Выберите пол",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+            return
+        }
+    }
+    
+    private func validationAgeField(field: String) -> Int {
+        var ageNum = 0
+        if let age = Int(field) {
+            ageNum = age
+        } else {
+            let alertController = UIAlertController(
+                title: "Ошибка!",
+                message: "Вы ввели не корректный возраст",
+                preferredStyle: .alert)
+            let btnOk = UIAlertAction(title: "Повторить", style: .default)
+            alertController.addAction(btnOk)
+            self.present(alertController, animated: true)
+        }
+        return ageNum
+    }
+    
+    private func whichGenderSelected() -> String {
+        var gender = ""
+        if radioBtn.isSelected {
+            gender = "Мужчина"
+        } else if radioBtnTwo.isSelected {
+            gender = "Женщина"
+        }
+        return gender
+    }
+    
+    private func loginInApp() {
+        let nameField = nameTextField.text!
+        let ageField = ageTextField.text!
+        validationIsEmpty(firstField: nameField, secondField: ageField)
+        let age = validationAgeField(field: ageField)
+        checkGenderSelect()
+        let gender = whichGenderSelected()
+        let user = User(name: nameField, age: age, gender: gender)
+        user.saveFields()
+    }
+    
     @objc private func showMainScreen(sender: UIButton) {
-        let mainViewController: MainViewController = MainViewController()
+        loginInApp()
+        let mainViewController = TabViewController()
         mainViewController.modalPresentationStyle = .fullScreen
         self.show(mainViewController, sender: self)
     }
@@ -209,9 +284,9 @@ extension ViewController: UITextFieldDelegate {
 //Создаю расширение для UIColor, чтобы он принимал HEX кодировку (взял со stackoverflow)
 extension UIColor {
        convenience init(red: Int, green: Int, blue: Int) {
-           assert(red >= 0 && red <= 255, "Invalid red component")
-           assert(green >= 0 && green <= 255, "Invalid green component")
-           assert(blue >= 0 && blue <= 255, "Invalid blue component")
+           assert(red >= 0 && red <= 255, "Некорректный красный цвет")
+           assert(green >= 0 && green <= 255, "Некорректный зеленый цвет")
+           assert(blue >= 0 && blue <= 255, "Некорректный синий цвет")
 
            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
        }
