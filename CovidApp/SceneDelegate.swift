@@ -29,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let controller = TabViewController()  //prod TabViewController()
         window?.rootViewController = controller
+        window?.overrideUserInterfaceStyle = .light
         window?.makeKeyAndVisible()
     }
 }
