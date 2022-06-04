@@ -237,9 +237,9 @@ final class ViewController: UIViewController {
     private func whichGenderSelected() -> String {
         var gender = ""
         if radioBtn.isSelected {
-            gender = "Мужчина"
+            gender = "Муж."
         } else if radioBtnTwo.isSelected {
-            gender = "Женщина"
+            gender = "Жен."
         }
         return gender
     }
