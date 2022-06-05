@@ -75,7 +75,6 @@ final class ProfileTabViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.largeContentTitle = "dsdsd"
         view.backgroundColor = .systemGray5
         addSubviews()
         setupConstraints()
