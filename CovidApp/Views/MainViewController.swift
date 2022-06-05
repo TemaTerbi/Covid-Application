@@ -123,12 +123,9 @@ final class MainViewController: UIViewController {
     }
     
     private func addSubviews() {
-//        self.view.addSubview(totalInfoStackView)
-//        self.view.addSubview(newCasesStackView)
         self.view.addSubview(scrollView)
         scrollView.addSubview(totalInfoStackView)
         scrollView.addSubview(newCasesStackView)
-
     }
     
     //MARK: - Private Methods
