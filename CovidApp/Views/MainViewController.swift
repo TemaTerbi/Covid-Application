@@ -10,7 +10,6 @@ import UIKit
 final class MainViewController: UIViewController {
     
     private let storage = UserDefaults.standard
-    var apiManager = ApiManager()
     private var totalConfirmed: String = ""
     
     private lazy var totalLabel: UILabel = {
@@ -43,13 +42,14 @@ final class MainViewController: UIViewController {
     }()
     
     //MARK: - Helper Methotd 
-    private func getResponseFromApiTotal() {
-        apiManager.getTotal { global in
+    func getResponseFromApiTotal() {
+        ApiManager.shared.getTotal { globals in
             let storage = UserDefaults.standard
-            storage.set(global.global?.totalConfirmed, forKey: "totalConfirmed")
+            storage.set(globals.global?.totalConfirmed, forKey: "totalConfirmed")
         }
         totalConfirmed = String(storage.integer(forKey: "totalConfirmed"))
     }
+    
     
     //MARK: - Life cycle
     override func viewDidAppear(_ animated: Bool) {
@@ -86,8 +86,8 @@ final class MainViewController: UIViewController {
             totalInfoStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             totalInfoStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             
-            covidImage.widthAnchor.constraint(equalToConstant: 100),
-            covidImage.heightAnchor.constraint(equalToConstant: 100),
+            covidImage.widthAnchor.constraint(equalToConstant: 80),
+            covidImage.heightAnchor.constraint(equalToConstant: 80),
         ]
         
         NSLayoutConstraint.activate(constraints)

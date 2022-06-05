@@ -1,24 +1,15 @@
-//
-//  Global.swift
-//  CovidApp
-//
-//  Created by TeRb1 on 04.06.2022.
-//
-
 import Foundation
 
 struct Global: Codable {
     let id, message: String?
     let global: GlobalClass?
     let countries: [Country]?
-    let date: DateEnum?
 
     enum CodingKeys: String, CodingKey {
         case id = "ID"
         case message = "Message"
         case global = "Global"
         case countries = "Countries"
-        case date = "Date"
     }
 }
 
@@ -27,7 +18,6 @@ struct Country: Codable {
     let id, country, countryCode, slug: String?
     let newConfirmed, totalConfirmed, newDeaths, totalDeaths: Int?
     let newRecovered, totalRecovered: Int?
-    let date: DateEnum?
     let premium: Premium?
 
     enum CodingKeys: String, CodingKey {
@@ -41,13 +31,8 @@ struct Country: Codable {
         case totalDeaths = "TotalDeaths"
         case newRecovered = "NewRecovered"
         case totalRecovered = "TotalRecovered"
-        case date = "Date"
         case premium = "Premium"
     }
-}
-
-enum DateEnum: String, Codable {
-    case the20220604T183229962Z = "2022-06-04T18:32:29.962Z"
 }
 
 // MARK: - Premium
@@ -106,7 +91,6 @@ enum Continent: String, Codable {
 struct GlobalClass: Codable {
     let newConfirmed, totalConfirmed, newDeaths, totalDeaths: Int?
     let newRecovered, totalRecovered: Int?
-    let date: DateEnum?
 
     enum CodingKeys: String, CodingKey {
         case newConfirmed = "NewConfirmed"
@@ -115,7 +99,7 @@ struct GlobalClass: Codable {
         case totalDeaths = "TotalDeaths"
         case newRecovered = "NewRecovered"
         case totalRecovered = "TotalRecovered"
-        case date = "Date"
     }
 }
+
 
