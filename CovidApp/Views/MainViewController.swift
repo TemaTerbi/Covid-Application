@@ -17,15 +17,30 @@ final class MainViewController: UIViewController {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = totalConfirmed
+        label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
-        label.backgroundColor = .white
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 10
         return label
     }()
     
-    //MARK: - Helper Methodt
+    private lazy var covidImage: UIImageView = {
+        let imageCovid = UIImage(named: "covidImage")
+        var image = UIImageView(image: imageCovid)
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
+    private lazy var totalInfoStackView: UIStackView = {
+        var stackView = UIStackView(arrangedSubviews: [covidImage, totalLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
+        stackView.layer.cornerRadius = 15
+        return stackView
+    }()
+    
+    //MARK: - Helper Methotd 
     private func getResponseFromApiTotal() {
         apiManager.getTotal { global in
             let storage = UserDefaults.standard
@@ -34,6 +49,7 @@ final class MainViewController: UIViewController {
         totalConfirmed = String(storage.integer(forKey: "totalConfirmed"))
     }
     
+    //MARK: - Life cycle
     override func viewDidAppear(_ animated: Bool) {
         if storage.bool(forKey: "Login") == false {
             storage.set(true, forKey: "Login")
@@ -45,7 +61,6 @@ final class MainViewController: UIViewController {
         }
     }
     
-    //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -58,16 +73,17 @@ final class MainViewController: UIViewController {
     
     private func addSubviews() {
         self.view.addSubview(totalLabel)
+        self.view.addSubview(totalInfoStackView)
     }
     
     //MARK: - Private Methods
     private func setupConstraints() {
         
         let constraints = [
-            totalLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            totalLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
-            totalLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            totalLabel.heightAnchor.constraint(equalToConstant: 35),
+            totalInfoStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            totalInfoStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            totalInfoStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            totalInfoStackView.heightAnchor.constraint(equalToConstant: 150),
         ]
         
         NSLayoutConstraint.activate(constraints)

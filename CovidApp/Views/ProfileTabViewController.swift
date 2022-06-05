@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 final class ProfileTabViewController: UIViewController {
     
@@ -123,6 +124,8 @@ final class ProfileTabViewController: UIViewController {
     }
     
     @objc private func changeInfo() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
         let loginVC: ViewController = ViewController()
         self.show(loginVC, sender: self)
     }
