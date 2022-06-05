@@ -34,6 +34,8 @@ final class MainViewController: UIViewController {
         var stackView = UIStackView(arrangedSubviews: [covidImage, totalLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         stackView.distribution = .fillEqually
         stackView.backgroundColor = .white
         stackView.layer.cornerRadius = 15
@@ -80,10 +82,12 @@ final class MainViewController: UIViewController {
     private func setupConstraints() {
         
         let constraints = [
-            totalInfoStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             totalInfoStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            totalInfoStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             totalInfoStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            totalInfoStackView.heightAnchor.constraint(equalToConstant: 150),
+            
+            covidImage.widthAnchor.constraint(equalToConstant: 100),
+            covidImage.heightAnchor.constraint(equalToConstant: 100),
         ]
         
         NSLayoutConstraint.activate(constraints)
