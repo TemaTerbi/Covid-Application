@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let radioButtonIsSelecredColor: UIColor? = UIColor(hex: 0xB8FFBF)
     
-    private lazy var nameTextField: UITextField = {
+    lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = colorOfTextField
@@ -237,9 +237,9 @@ final class ViewController: UIViewController {
     private func whichGenderSelected() -> String {
         var gender = ""
         if radioBtn.isSelected {
-            gender = "Мужчина"
+            gender = "Муж."
         } else if radioBtnTwo.isSelected {
-            gender = "Женщина"
+            gender = "Жен."
         }
         return gender
     }

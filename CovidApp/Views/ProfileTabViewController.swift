@@ -6,18 +6,18 @@
 //
 
 import UIKit
+import AudioToolbox
 
 final class ProfileTabViewController: UIViewController {
     
+    private let user = LoadUserData().loadUserData()
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let btnExit: UIColor = UIColor(hex: 0xF84A4A)
     
-    private let storage = UserDefaults.standard
-    
-    private lazy  var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = storage.string(forKey: "Name")
+        label.text = user.name
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .white
@@ -26,10 +26,10 @@ final class ProfileTabViewController: UIViewController {
         return label
     }()
     
-    private lazy  var ageLable: UILabel = {
+    private lazy var ageLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = storage.string(forKey: "Age")
+        label.text = user.age
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .white
@@ -38,10 +38,10 @@ final class ProfileTabViewController: UIViewController {
         return label
     }()
     
-    private lazy  var genderLable: UILabel = {
+    private lazy var genderLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = storage.string(forKey: "Gender")
+        label.text = user.gender
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .white
@@ -74,7 +74,6 @@ final class ProfileTabViewController: UIViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.largeContentTitle = "dsdsd"
         view.backgroundColor = .systemGray5
         addSubviews()
         setupConstraints()
@@ -123,6 +122,8 @@ final class ProfileTabViewController: UIViewController {
     }
     
     @objc private func changeInfo() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
         let loginVC: ViewController = ViewController()
         self.show(loginVC, sender: self)
     }
