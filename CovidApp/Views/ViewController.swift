@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let radioButtonIsSelecredColor: UIColor? = UIColor(hex: 0xB8FFBF)
     
-    private lazy var nameTextField: UITextField = {
+    lazy var nameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = colorOfTextField
@@ -252,7 +252,9 @@ final class ViewController: UIViewController {
         checkGenderSelect()
         let gender = whichGenderSelected()
         let user = User(name: nameField, age: age, gender: gender)
-        user.saveFields()
+        let test = ProfileTabViewController()
+        test.user = user
+//        user.saveFields()
     }
     
     @objc private func showMainScreen(sender: UIButton) {

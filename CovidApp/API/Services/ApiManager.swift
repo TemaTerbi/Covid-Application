@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum ApiType {
 
@@ -44,7 +45,7 @@ class ApiManager {
             if let data = data, let global = try? JSONDecoder().decode(Global.self, from: data) {
                 completion(global)
             } else {
-                print("PIZDEC HUITA NE RABOTAET")
+                print("Network Error")
             }
         }
         task.resume()

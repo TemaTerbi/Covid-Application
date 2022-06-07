@@ -33,6 +33,4 @@ class User: UserProtocol {
         storage.set(self.age, forKey: "Age")
         storage.set(self.gender, forKey: "Gender")
     }
-    
-    
 }
