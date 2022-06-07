@@ -44,7 +44,7 @@ final class ApiManager {
             if let data = data, let global = try? JSONDecoder().decode(Global.self, from: data) {
                 completion(global)
             } else {
-                print("Network Error: \(error!.localizedDescription)")
+                print("Network Error: \(error?.localizedDescription ?? "")")
             }
         }
         task.resume()
