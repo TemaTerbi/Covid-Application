@@ -16,7 +16,7 @@ protocol UserProtocol {
 
 class User: UserProtocol {
     
-    var storage = UserDefaults.standard
+    let storage = UserDefaults.standard
     
     var name: String
     var age: Int
@@ -32,5 +32,17 @@ class User: UserProtocol {
         storage.set(self.name, forKey: "Name")
         storage.set(self.age, forKey: "Age")
         storage.set(self.gender, forKey: "Gender")
+    }
+}
+
+struct LoadUserData {
+    let storage = UserDefaults.standard
+    
+    func loadUserData() -> (name: String, age: String, gender: String) {
+        let name = storage.string(forKey: "Name")
+        let age = String(storage.integer(forKey: "Age"))
+        let gender = storage.string(forKey: "Gender")
+        let tupleResult = (name!,age,gender!)
+        return tupleResult
     }
 }

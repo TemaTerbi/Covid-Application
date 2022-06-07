@@ -17,14 +17,15 @@ final class MainViewController: UIViewController {
     
     
     private lazy var scrollView: UIScrollView = {
-            let v = UIScrollView()
-            v.translatesAutoresizingMaskIntoConstraints = false
-            return v
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            return scrollView
         }()
     
     private lazy var totalLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = storage.string(forKey: "totalCases")
         label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
@@ -35,6 +36,7 @@ final class MainViewController: UIViewController {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = newCasesLabelColor
+        label.text = "+" + storage.string(forKey: "newCases")!
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         return label
@@ -83,30 +85,25 @@ final class MainViewController: UIViewController {
     //MARK: - Helper Methotd 
     private func getResponseFromApiTotal() {
         ApiManager.shared.getTotal { globals in
+            let storage = UserDefaults.standard
             self.totalConfirmed = (globals.global?.totalConfirmed)!
+            storage.set(self.totalConfirmed, forKey: "totalCases")
         }
     }
     
     private func getResponseFromApiNewCases() {
         ApiManager.shared.getTotal { globals in
+            let storage = UserDefaults.standard
             self.newCases = (globals.global?.newConfirmed)!
+            storage.set(self.newCases, forKey: "newCases")
         }
     }
     
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let storage = UserDefaults.standard
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
-        
-        let stringTotal = String(totalConfirmed)
-        let stringNewCases = "+" + String(newCases)
-        storage.set(stringTotal, forKey: "totalCases")
-        storage.set(stringNewCases, forKey: "newCases")
-        totalLabel.text = storage.string(forKey: "totalCases")
-        newCasesLabel.text = storage.string(forKey: "newCases")
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,7 +121,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
-        
+
         addSubviews()
         setupConstraints()
     }

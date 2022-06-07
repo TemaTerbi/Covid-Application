@@ -252,9 +252,7 @@ final class ViewController: UIViewController {
         checkGenderSelect()
         let gender = whichGenderSelected()
         let user = User(name: nameField, age: age, gender: gender)
-        let test = ProfileTabViewController()
-        test.user = user
-//        user.saveFields()
+        user.saveFields()
     }
     
     @objc private func showMainScreen(sender: UIButton) {

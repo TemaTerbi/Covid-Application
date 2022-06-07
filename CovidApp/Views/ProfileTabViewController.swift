@@ -10,11 +10,9 @@ import AudioToolbox
 
 final class ProfileTabViewController: UIViewController {
     
+    private let user = LoadUserData().loadUserData()
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let btnExit: UIColor = UIColor(hex: 0xF84A4A)
-    var user: User!
-
-    private let storage = UserDefaults.standard
     
     private lazy var nameLabel: UILabel = {
         var label = UILabel()
@@ -31,7 +29,7 @@ final class ProfileTabViewController: UIViewController {
     private lazy var ageLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = storage.string(forKey: "Age")
+        label.text = user.age
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .white
@@ -43,7 +41,7 @@ final class ProfileTabViewController: UIViewController {
     private lazy var genderLable: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = storage.string(forKey: "Gender")
+        label.text = user.gender
         label.font = UIFont.systemFont(ofSize: 20)
         label.textAlignment = .center
         label.backgroundColor = .white
