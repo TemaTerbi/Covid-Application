@@ -10,20 +10,20 @@ import UIKit
 final class MainViewController: UIViewController {
     
     private let storage = UserDefaults.standard
-    private var totalConfirmed: Int = 0
-    private var newCases: Int = 0
-    private let newCasesLabelColor: UIColor = UIColor(hex: 0x7BB54E)
-    private let imageColor: UIColor = UIColor(hex: 0x25739F)
+    private var totalConfirmed = 0
+    private var newCases = 0
+    private let newCasesLabelColor = UIColor(hex: 0x7BB54E)
+    private let imageColor = UIColor(hex: 0x25739F)
     
     
     private lazy var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             return scrollView
-        }()
+    }()
     
     private lazy var totalLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = storage.string(forKey: "totalCases")
         label.textColor = .systemGray
@@ -33,7 +33,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var newCasesLabel: UILabel = {
-        var label = UILabel()
+        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = newCasesLabelColor
         label.text = "+" + storage.string(forKey: "newCases")!
@@ -59,7 +59,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var totalInfoStackView: UIStackView = {
-        var stackView = UIStackView(arrangedSubviews: [covidImage, totalLabel])
+        let stackView = UIStackView(arrangedSubviews: [covidImage, totalLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -71,7 +71,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var newCasesStackView: UIStackView = {
-        var stackView = UIStackView(arrangedSubviews: [newCovid, newCasesLabel])
+        let stackView = UIStackView(arrangedSubviews: [newCovid, newCasesLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.isLayoutMarginsRelativeArrangement = true

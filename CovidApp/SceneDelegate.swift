@@ -10,7 +10,6 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private let storage = UserDefaults.standard
-    private var totalConfirmed: String = ""
 
     var window: UIWindow?
     

@@ -14,7 +14,7 @@ protocol UserProtocol {
     var gender: String { get set }
 }
 
-class User: UserProtocol {
+final class User: UserProtocol {
     
     let storage = UserDefaults.standard
     

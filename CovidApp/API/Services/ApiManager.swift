@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 enum ApiType {
 
@@ -35,7 +34,7 @@ enum ApiType {
     }
 }
 
-class ApiManager {
+final class ApiManager {
 
     static let shared = ApiManager()
 
@@ -45,7 +44,7 @@ class ApiManager {
             if let data = data, let global = try? JSONDecoder().decode(Global.self, from: data) {
                 completion(global)
             } else {
-                print("Network Error")
+                print("Network Error: \(error!.localizedDescription)")
             }
         }
         task.resume()
