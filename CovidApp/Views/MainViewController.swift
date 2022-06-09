@@ -37,7 +37,7 @@ final class MainViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = newCasesLabelColor
-        label.text = "+" + storage.string(forKey: "newCases")!
+        label.text = "+" + (storage.string(forKey: "newCases") ?? "")
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         return label
@@ -115,7 +115,7 @@ final class MainViewController: UIViewController {
     
     private func updateDataInLabel() {
         totalLabel.text = storage.string(forKey: "totalCases")
-        newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
+        newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
     }
     
     private func getResponseFromApiTotal() {
@@ -161,6 +161,8 @@ final class MainViewController: UIViewController {
 
         addSubviews()
         setupConstraints()
+        
+        updateDataInLabel()
     }
     
     private func addSubviews() {

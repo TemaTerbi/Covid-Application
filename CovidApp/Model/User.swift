@@ -42,7 +42,7 @@ struct LoadUserData {
         let name = storage.string(forKey: "Name")
         let age = String(storage.integer(forKey: "Age"))
         let gender = storage.string(forKey: "Gender")
-        let tupleResult = (name!,age,gender!)
+        let tupleResult = (name ?? "",age,gender ?? "")
         return tupleResult
     }
 }
