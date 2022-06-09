@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 final class MainViewController: UIViewController {
     
@@ -82,7 +83,41 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
-    //MARK: - Helper Methotd 
+    private lazy var updateButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.setTitle("Обновить", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.backgroundColor = imageColor
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(updateDataInLabelBtn), for: .touchUpInside)
+        return button
+    }()
+    
+    //MARK: - Helper Methotd
+    @objc private func updateDataInLabelBtn() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
+        totalLabel.text = storage.string(forKey: "totalCases")
+        newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
+        UIView.animate(withDuration: 0.3,
+            animations: {
+            self.updateButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            },
+            completion: { _ in
+                UIView.animate(withDuration: 0.3) {
+                    self.updateButton.transform = CGAffineTransform.identity
+                }
+            })
+    }
+    
+    private func updateDataInLabel() {
+        totalLabel.text = storage.string(forKey: "totalCases")
+        newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
+    }
+    
     private func getResponseFromApiTotal() {
         ApiManager.shared.getTotal { globals in
             let storage = UserDefaults.standard
@@ -104,6 +139,8 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
+        
+        updateDataInLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,6 +167,7 @@ final class MainViewController: UIViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(totalInfoStackView)
         scrollView.addSubview(newCasesStackView)
+        scrollView.addSubview(updateButton)
     }
     
     //MARK: - Private Methods
@@ -154,7 +192,11 @@ final class MainViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-
+            
+            updateButton.topAnchor.constraint(equalTo: newCasesStackView.bottomAnchor, constant: 10),
+            updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            updateButton.heightAnchor.constraint(equalToConstant: 50),
         ]
         
         NSLayoutConstraint.activate(constraints)
