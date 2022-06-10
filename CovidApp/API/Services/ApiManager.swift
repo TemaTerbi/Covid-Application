@@ -3,7 +3,8 @@ import Foundation
 enum ApiType {
 
     case getTotal
-
+    case getCounries
+    
     var baseUrl: String {
         return "https://api.covid19api.com/"
     }
@@ -19,6 +20,8 @@ enum ApiType {
         switch self {
         case .getTotal:
             return "summary"
+        case .getCounries:
+            return "countries"
         }
     }
 
@@ -43,6 +46,18 @@ final class ApiManager {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data, let global = try? JSONDecoder().decode(Global.self, from: data) {
                 completion(global)
+            } else {
+                print("Network Error: \(error?.localizedDescription ?? "")")
+            }
+        }
+        task.resume()
+    }
+    
+    func getCounries(completion: @escaping ([Countries]) -> Void) {
+        let request = ApiType.getCounries.request
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data, let countries = try? JSONDecoder().decode([Countries].self, from: data) {
+                completion(countries)
             } else {
                 print("Network Error: \(error?.localizedDescription ?? "")")
             }

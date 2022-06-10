@@ -61,6 +61,17 @@ final class ProfileTabViewController: UIViewController {
         return button
     }()
     
+    private lazy var selectCountry: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 21
+        button.setTitle("Выбрать", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.backgroundColor = btnColor
+        button.addTarget(self, action: #selector(selectCountryBtn), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var header: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -70,13 +81,24 @@ final class ProfileTabViewController: UIViewController {
         label.textAlignment = .left
         return label
     }()
+    
+    private lazy var pickerView: UIPickerView = {
+        var picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.backgroundColor = .white
+        picker.layer.cornerRadius = 10
+        return picker
+    }()
+    
 
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
+        
         addSubviews()
         setupConstraints()
+        pickerView.delegate = self
     }
     
     private func addSubviews() {
@@ -85,6 +107,8 @@ final class ProfileTabViewController: UIViewController {
         self.view.addSubview(genderLable)
         self.view.addSubview(changeButton)
         self.view.addSubview(header)
+        self.view.addSubview(pickerView)
+        self.view.addSubview(selectCountry)
     }
     
     //MARK: - Private Methods
@@ -115,10 +139,35 @@ final class ProfileTabViewController: UIViewController {
             changeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
             changeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             changeButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            pickerView.topAnchor.constraint(equalTo: genderLable.bottomAnchor, constant: 10),
+            pickerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            pickerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            pickerView.heightAnchor.constraint(equalToConstant: 100),
+            
+            selectCountry.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            selectCountry.bottomAnchor.constraint(equalTo: changeButton.topAnchor, constant: -5),
+            selectCountry.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            selectCountry.heightAnchor.constraint(equalToConstant: 40),
         ]
         
         NSLayoutConstraint.activate(constraints)
         
+    }
+    
+    @objc private func selectCountryBtn() {
+        let indexOfCountry = pickerView.selectedRow(inComponent: 0)
+        let selectedIso = DataService.shared.arrayCountries[indexOfCountry].iso2
+        UserDefaults.standard.set(selectedIso, forKey: "selectIso")
+        UIView.animate(withDuration: 0.3,
+            animations: {
+            self.selectCountry.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            },
+            completion: { _ in
+                UIView.animate(withDuration: 0.3) {
+                    self.selectCountry.transform = CGAffineTransform.identity
+                }
+            })
     }
     
     @objc private func changeInfo() {
@@ -126,5 +175,29 @@ final class ProfileTabViewController: UIViewController {
         generator.selectionChanged()
         let loginVC: ViewController = ViewController()
         self.show(loginVC, sender: self)
+        UIView.animate(withDuration: 0.3,
+            animations: {
+            self.changeButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            },
+            completion: { _ in
+                UIView.animate(withDuration: 0.3) {
+                    self.changeButton.transform = CGAffineTransform.identity
+                }
+            })
+    }
+}
+
+//delegate for picker view
+extension ProfileTabViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return DataService.shared.arrayCountries.count
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return DataService.shared.arrayCountries[row].country
     }
 }

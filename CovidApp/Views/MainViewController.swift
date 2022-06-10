@@ -16,7 +16,6 @@ final class MainViewController: UIViewController {
     private let newCasesLabelColor = UIColor(hex: 0x7BB54E)
     private let imageColor = UIColor(hex: 0x25739F)
     
-    
     private lazy var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
             scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +37,16 @@ final class MainViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = newCasesLabelColor
         label.text = "+" + (storage.string(forKey: "newCases") ?? "")
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var counrtyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = newCasesLabelColor
+        label.text = storage.string(forKey: "selectIso")
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         return label
@@ -83,6 +92,18 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var countryStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [counrtyLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
+        stackView.layer.cornerRadius = 15
+        return stackView
+    }()
+    
     private lazy var updateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -116,6 +137,7 @@ final class MainViewController: UIViewController {
     private func updateDataInLabel() {
         totalLabel.text = storage.string(forKey: "totalCases")
         newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
+        counrtyLabel.text = storage.string(forKey: "selectIso")
     }
     
     private func getResponseFromApiTotal() {
@@ -134,11 +156,19 @@ final class MainViewController: UIViewController {
         }
     }
     
+    private func loadResponseFromApiGetCountries() {
+        ApiManager.shared.getCounries { countries in
+            let sortedCountries = countries.sorted{$0.country ?? "" < $1.country ?? ""}
+            DataService.shared.arrayCountries = sortedCountries
+        }
+    }
+    
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
+        loadResponseFromApiGetCountries()
         
         updateDataInLabel()
     }
@@ -158,7 +188,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
-
+        
         addSubviews()
         setupConstraints()
         
@@ -169,6 +199,7 @@ final class MainViewController: UIViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(totalInfoStackView)
         scrollView.addSubview(newCasesStackView)
+        scrollView.addSubview(countryStack)
         scrollView.addSubview(updateButton)
     }
     
@@ -199,6 +230,10 @@ final class MainViewController: UIViewController {
             updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             updateButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            countryStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            countryStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            countryStack.topAnchor.constraint(equalTo: updateButton.bottomAnchor, constant: 10),
         ]
         
         NSLayoutConstraint.activate(constraints)
