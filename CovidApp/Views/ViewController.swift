@@ -91,16 +91,19 @@ final class ViewController: UIViewController {
         text.textAlignment = .center
         return text
     }()
-    
 
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        let selectedIso = "RU"
+        let selectedName = "Russia"
         nameTextField.delegate = self
         ageTextField.delegate = self
         addSubviews()
         setupConstraints()
+        UserDefaults.standard.set(selectedIso, forKey: "selectIso")
+        UserDefaults.standard.set(selectedName, forKey: "countryName")
     }
     
     // MARK: - Private Methods
@@ -299,4 +302,6 @@ extension UIColor {
            )
        }
     }
+
+
 

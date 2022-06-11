@@ -55,7 +55,7 @@ final class MainViewController: UIViewController {
     private lazy var countryMonthCases: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = String(storage.string(forKey: "monthCounryCases") ?? "")
+        label.text = storage.string(forKey: "monthCounryCases")
         label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
@@ -133,6 +133,7 @@ final class MainViewController: UIViewController {
         generator.selectionChanged()
         totalLabel.text = storage.string(forKey: "totalCases")
         newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
+        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
         UIView.animate(withDuration: 0.3,
             animations: {
             self.updateButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -145,10 +146,10 @@ final class MainViewController: UIViewController {
     }
     
     private func updateDataInLabel() {
+        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
         totalLabel.text = storage.string(forKey: "totalCases")
         newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
         counrtyLabel.text = storage.string(forKey: "countryName")
-        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
     }
     
     private func getResponseFromApiTotal() {
@@ -180,18 +181,19 @@ final class MainViewController: UIViewController {
             let allCases = country.map{$0.cases}
             for el in allCases {
                 result += el ?? 0
+                let stringResult = String(result)
+                UserDefaults.standard.set(stringResult, forKey: "monthCounryCases")
             }
-            UserDefaults.standard.set(result, forKey: "monthCounryCases")
         }
     }
     
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadResponseFromApiGetByCountry()
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
         loadResponseFromApiGetCountries()
-        loadResponseFromApiGetByCountry()
         
         updateDataInLabel()
     }
