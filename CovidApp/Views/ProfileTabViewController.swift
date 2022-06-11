@@ -158,7 +158,9 @@ final class ProfileTabViewController: UIViewController {
     @objc private func selectCountryBtn() {
         let indexOfCountry = pickerView.selectedRow(inComponent: 0)
         let selectedIso = DataService.shared.arrayCountries[indexOfCountry].iso2
+        let selectedName = DataService.shared.arrayCountries[indexOfCountry].country
         UserDefaults.standard.set(selectedIso, forKey: "selectIso")
+        UserDefaults.standard.set(selectedName, forKey: "countryName")
         UIView.animate(withDuration: 0.3,
             animations: {
             self.selectCountry.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)

@@ -11,4 +11,5 @@ final class DataService {
     static let shared = DataService()
     
     var arrayCountries = [Countries]()
+    var monthCases: Int = 0
 }

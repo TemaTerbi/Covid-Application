@@ -45,8 +45,18 @@ final class MainViewController: UIViewController {
     private lazy var counrtyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = newCasesLabelColor
-        label.text = storage.string(forKey: "selectIso")
+        label.textColor = imageColor
+        label.text = storage.string(forKey: "countryName")
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var countryMonthCases: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = String(storage.string(forKey: "monthCounryCases") ?? "")
+        label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         return label
@@ -93,9 +103,9 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var countryStack: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [counrtyLabel])
+        let stackView = UIStackView(arrangedSubviews: [counrtyLabel, countryMonthCases])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         stackView.distribution = .fillEqually
@@ -137,7 +147,8 @@ final class MainViewController: UIViewController {
     private func updateDataInLabel() {
         totalLabel.text = storage.string(forKey: "totalCases")
         newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
-        counrtyLabel.text = storage.string(forKey: "selectIso")
+        counrtyLabel.text = storage.string(forKey: "countryName")
+        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
     }
     
     private func getResponseFromApiTotal() {
@@ -163,12 +174,24 @@ final class MainViewController: UIViewController {
         }
     }
     
+    private func loadResponseFromApiGetByCountry() {
+        ApiManager.shared.getByCountry { country in
+            var result = 0
+            let allCases = country.map{$0.cases}
+            for el in allCases {
+                result += el ?? 0
+            }
+            UserDefaults.standard.set(result, forKey: "monthCounryCases")
+        }
+    }
+    
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
         loadResponseFromApiGetCountries()
+        loadResponseFromApiGetByCountry()
         
         updateDataInLabel()
     }
@@ -226,14 +249,14 @@ final class MainViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            updateButton.topAnchor.constraint(equalTo: newCasesStackView.bottomAnchor, constant: 10),
+            updateButton.topAnchor.constraint(equalTo: countryStack.bottomAnchor, constant: 10),
             updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             updateButton.heightAnchor.constraint(equalToConstant: 50),
             
             countryStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             countryStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            countryStack.topAnchor.constraint(equalTo: updateButton.bottomAnchor, constant: 10),
+            countryStack.topAnchor.constraint(equalTo: newCasesStackView.bottomAnchor, constant: 10),
         ]
         
         NSLayoutConstraint.activate(constraints)

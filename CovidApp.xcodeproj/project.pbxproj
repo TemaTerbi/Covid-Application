@@ -20,6 +20,7 @@
 		E65D764E2843E33A008E8744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65D764D2843E33A008E8744 /* Assets.xcassets */; };
 		E65D76512843E33A008E8744 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D764F2843E33A008E8744 /* LaunchScreen.storyboard */; };
 		E682016A284BF44500E430AC /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6820169284BF44500E430AC /* Global.swift */; };
+		E687E69528549C2B00112823 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = E687E69428549C2B00112823 /* Country.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		E65D76502843E33A008E8744 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65D76522843E33A008E8744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6820169284BF44500E430AC /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		E687E69428549C2B00112823 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				E6820169284BF44500E430AC /* Global.swift */,
 				E64D92232853F7B10027C8F4 /* Countries.swift */,
+				E687E69428549C2B00112823 /* Country.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				E61A10EC2847D4F3003E8545 /* TabViewController.swift in Sources */,
 				E61A10EE2847D5F6003E8545 /* ProfileTabViewController.swift in Sources */,
 				E65D76492843E338008E8744 /* ViewController.swift in Sources */,
+				E687E69528549C2B00112823 /* Country.swift in Sources */,
 				E65D76452843E338008E8744 /* AppDelegate.swift in Sources */,
 				E64D92272853FD370027C8F4 /* DataService.swift in Sources */,
 				E65D76472843E338008E8744 /* SceneDelegate.swift in Sources */,
