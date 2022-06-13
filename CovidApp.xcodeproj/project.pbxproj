@@ -23,6 +23,19 @@
 		E687E69528549C2B00112823 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = E687E69428549C2B00112823 /* Country.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E62846482855BD310074181F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E61A10DE28479EBC003E8545 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E61A10E22847C6B1003E8545 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -72,6 +85,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		E62846452855BD310074181F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E64D92252853FD180027C8F4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +132,7 @@
 			children = (
 				E65D76432843E338008E8744 /* CovidApp */,
 				E65D76422843E338008E8744 /* Products */,
+				E62846452855BD310074181F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +170,7 @@
 				E65D763D2843E338008E8744 /* Sources */,
 				E65D763E2843E338008E8744 /* Frameworks */,
 				E65D763F2843E338008E8744 /* Resources */,
+				E62846482855BD310074181F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

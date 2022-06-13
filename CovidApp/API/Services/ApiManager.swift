@@ -84,8 +84,7 @@ final class ApiManager {
             if let data = data, let country = try? JSONDecoder().decode(byCountry.self, from: data) {
                 completion(country)
             } else {
-                print(data?.count)
-                print("Network Error: \(error)")
+                print("Network Error: \(String(describing: error))")
             }
         }
         task.resume()

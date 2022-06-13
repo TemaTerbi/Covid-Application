@@ -143,7 +143,7 @@ final class ProfileTabViewController: UIViewController {
             pickerView.topAnchor.constraint(equalTo: genderLable.bottomAnchor, constant: 10),
             pickerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             pickerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            pickerView.heightAnchor.constraint(equalToConstant: 100),
+            pickerView.heightAnchor.constraint(equalToConstant: 200),
             
             selectCountry.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             selectCountry.bottomAnchor.constraint(equalTo: changeButton.topAnchor, constant: -5),
