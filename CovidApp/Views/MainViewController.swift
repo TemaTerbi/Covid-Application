@@ -134,12 +134,12 @@ final class MainViewController: UIViewController {
         totalLabel.text = storage.string(forKey: "totalCases")
         newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
         countryMonthCases.text = storage.string(forKey: "monthCounryCases")
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.1,
             animations: {
             self.updateButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             },
             completion: { _ in
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.1) {
                     self.updateButton.transform = CGAffineTransform.identity
                 }
             })
@@ -178,7 +178,7 @@ final class MainViewController: UIViewController {
     private func loadResponseFromApiGetByCountry() {
         ApiManager.shared.getByCountry { country in
             var result = 0
-            let allCases = country.map{$0.cases}
+            let allCases = country.map{$0.cases} 
             for el in allCases {
                 result += el ?? 0
                 let stringResult = String(result)
@@ -255,7 +255,7 @@ final class MainViewController: UIViewController {
             updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             updateButton.heightAnchor.constraint(equalToConstant: 50),
-            
+        
             countryStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             countryStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             countryStack.topAnchor.constraint(equalTo: newCasesStackView.bottomAnchor, constant: 10),

@@ -7,6 +7,7 @@
 
 import UIKit
 import AudioToolbox
+import SwiftUI
 
 final class ProfileTabViewController: UIViewController {
     
@@ -92,6 +93,11 @@ final class ProfileTabViewController: UIViewController {
     
 
     //MARK: - Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        ContentView().enumsOfCharts = .bar
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
@@ -155,21 +161,33 @@ final class ProfileTabViewController: UIViewController {
         
     }
     
+    private func loadResponseFromApiGetByCountry() {
+        ApiManager.shared.getByCountry { country in
+            let allCases = country.map{$0.cases}
+            DataService.shared.arrayCases = allCases
+        }
+    }
+    
     @objc private func selectCountryBtn() {
         let indexOfCountry = pickerView.selectedRow(inComponent: 0)
         let selectedIso = DataService.shared.arrayCountries[indexOfCountry].iso2
         let selectedName = DataService.shared.arrayCountries[indexOfCountry].country
         UserDefaults.standard.set(selectedIso, forKey: "selectIso")
         UserDefaults.standard.set(selectedName, forKey: "countryName")
-        UIView.animate(withDuration: 0.3,
+        DataService.shared.testbool = true
+        DataService.shared.items = []
+        UIView.animate(withDuration: 0.1,
             animations: {
             self.selectCountry.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             },
             completion: { _ in
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.1) {
                     self.selectCountry.transform = CGAffineTransform.identity
                 }
             })
+        let swiftUiScreen = ContentView()
+        let hostScreen = UIHostingController(rootView: swiftUiScreen)
+        hostScreen.viewDidAppear(true)
     }
     
     @objc private func changeInfo() {
@@ -177,12 +195,12 @@ final class ProfileTabViewController: UIViewController {
         generator.selectionChanged()
         let loginVC: ViewController = ViewController()
         self.show(loginVC, sender: self)
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.1,
             animations: {
             self.changeButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             },
             completion: { _ in
-                UIView.animate(withDuration: 0.3) {
+                UIView.animate(withDuration: 0.1) {
                     self.changeButton.transform = CGAffineTransform.identity
                 }
             })
