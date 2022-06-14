@@ -78,10 +78,10 @@ final class ApiManager {
         task.resume()
     }
     
-    func getByCountry(completion: @escaping (byCountry) -> Void) {
+    func getByCountry(completion: @escaping (ByCountry) -> Void) {
         let request = ApiType.getByCountry.request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let country = try? JSONDecoder().decode(byCountry.self, from: data) {
+            if let data = data, let country = try? JSONDecoder().decode(ByCountry.self, from: data) {
                 completion(country)
             } else {
                 print("Network Error: \(String(describing: error))")

@@ -174,7 +174,7 @@ final class ProfileTabViewController: UIViewController {
         let selectedName = DataService.shared.arrayCountries[indexOfCountry].country
         UserDefaults.standard.set(selectedIso, forKey: "selectIso")
         UserDefaults.standard.set(selectedName, forKey: "countryName")
-        DataService.shared.testbool = true
+        DataService.shared.boolLoop = true
         DataService.shared.items = []
         UIView.animate(withDuration: 0.1,
             animations: {

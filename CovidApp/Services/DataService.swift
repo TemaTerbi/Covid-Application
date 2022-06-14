@@ -19,22 +19,22 @@ final class DataService {
     var arrayCountries = [Countries]()
     var monthCases: Int = 0
     var arrayCases = [Int?]()
-    var testValue: Array<Int?>.SubSequence = []
-    var testbool = true
+    var sortedCases: Array<Int?>.SubSequence = []
+    var boolLoop = true
     var items: [Item] = []
     
     func updateData() {
-        testValue = arrayCases.prefix(12)
+        sortedCases = arrayCases.prefix(12)
     }
     
     func getValue() {
         var dayCounter = 0
-        if testbool {
-            for el in testValue {
+        if boolLoop {
+            for el in sortedCases {
                 items.append(Item(type: String(dayCounter), values: Double(el ?? 0)))
                 dayCounter += 1
             }
         }
-        testbool = false
+        boolLoop = false
     }
 }

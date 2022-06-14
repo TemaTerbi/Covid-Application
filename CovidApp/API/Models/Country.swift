@@ -17,4 +17,4 @@ struct CountryElement: Codable {
 }
 
 
-typealias byCountry = [CountryElement]
+typealias ByCountry = [CountryElement]
