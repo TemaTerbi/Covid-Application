@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class TabViewController: UITabBarController {
     override func viewDidLoad() {
@@ -21,7 +22,15 @@ final class TabViewController: UITabBarController {
         let ProfileVC = ProfileTabViewController()
         let icon2 = UITabBarItem(title: "Профиль", image: UIImage(named: "user"), tag: 1)
         ProfileVC.tabBarItem = icon2
-        let controllers = [MainVC, ProfileVC]
+        
+        let swiftUiScreen = ContentView()
+        let hostScreen = UIHostingController(rootView: swiftUiScreen)
+        let icon3 = UITabBarItem(title: "Статистика", image: UIImage(named: "stat"), tag: 2)
+        hostScreen.tabBarItem = icon3
+        hostScreen.viewDidLoad()
+        
+        
+        let controllers = [MainVC, hostScreen, ProfileVC]
         self.viewControllers = controllers
     }
 }

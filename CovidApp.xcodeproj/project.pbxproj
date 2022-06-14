@@ -7,25 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E611EA6728587E660069D015 /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = E611EA6628587E660069D015 /* test.swift */; };
 		E61A10DF28479EBC003E8545 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A10DE28479EBC003E8545 /* MainViewController.swift */; };
 		E61A10E32847C6B1003E8545 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A10E22847C6B1003E8545 /* User.swift */; };
 		E61A10EC2847D4F3003E8545 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A10EB2847D4F3003E8545 /* TabViewController.swift */; };
 		E61A10EE2847D5F6003E8545 /* ProfileTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A10ED2847D5F6003E8545 /* ProfileTabViewController.swift */; };
+		E64D92242853F7B10027C8F4 /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D92232853F7B10027C8F4 /* Countries.swift */; };
+		E64D92272853FD370027C8F4 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D92262853FD370027C8F4 /* DataService.swift */; };
 		E65582F6284B5A7000B6D034 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65582F5284B5A7000B6D034 /* ApiManager.swift */; };
+		E65B83C02857E56000EAC694 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65B83BF2857E56000EAC694 /* ContentView.swift */; };
 		E65D76452843E338008E8744 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D76442843E338008E8744 /* AppDelegate.swift */; };
 		E65D76472843E338008E8744 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D76462843E338008E8744 /* SceneDelegate.swift */; };
 		E65D76492843E338008E8744 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D76482843E338008E8744 /* ViewController.swift */; };
 		E65D764E2843E33A008E8744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65D764D2843E33A008E8744 /* Assets.xcassets */; };
 		E65D76512843E33A008E8744 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D764F2843E33A008E8744 /* LaunchScreen.storyboard */; };
 		E682016A284BF44500E430AC /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6820169284BF44500E430AC /* Global.swift */; };
+		E687E69528549C2B00112823 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = E687E69428549C2B00112823 /* Country.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E62846482855BD310074181F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		E611EA6628587E660069D015 /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		E61A10DE28479EBC003E8545 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E61A10E22847C6B1003E8545 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E61A10EB2847D4F3003E8545 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		E61A10ED2847D5F6003E8545 /* ProfileTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTabViewController.swift; sourceTree = "<group>"; };
+		E64D92232853F7B10027C8F4 /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
+		E64D92262853FD370027C8F4 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		E65582F5284B5A7000B6D034 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		E65B83BF2857E56000EAC694 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = ../../../ChartsScreen/ChartsScreen/ContentView.swift; sourceTree = "<group>"; };
 		E65D76412843E338008E8744 /* CovidApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CovidApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D76442843E338008E8744 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E65D76462843E338008E8744 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +56,7 @@
 		E65D76502843E33A008E8744 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E65D76522843E33A008E8744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6820169284BF44500E430AC /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		E687E69428549C2B00112823 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				E61A10E22847C6B1003E8545 /* User.swift */,
+				E611EA6628587E660069D015 /* test.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -58,12 +82,21 @@
 		E61A10E42847CA46003E8545 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E65B83BF2857E56000EAC694 /* ContentView.swift */,
 				E65D76482843E338008E8744 /* ViewController.swift */,
 				E61A10DE28479EBC003E8545 /* MainViewController.swift */,
 				E61A10EB2847D4F3003E8545 /* TabViewController.swift */,
 				E61A10ED2847D5F6003E8545 /* ProfileTabViewController.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E64D92252853FD180027C8F4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E64D92262853FD370027C8F4 /* DataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		E65582F2284B5A3F00B6D034 /* API */ = {
@@ -79,6 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				E6820169284BF44500E430AC /* Global.swift */,
+				E64D92232853F7B10027C8F4 /* Countries.swift */,
+				E687E69428549C2B00112823 /* Country.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -110,6 +145,7 @@
 		E65D76432843E338008E8744 /* CovidApp */ = {
 			isa = PBXGroup;
 			children = (
+				E64D92252853FD180027C8F4 /* Services */,
 				E65582F2284B5A3F00B6D034 /* API */,
 				E61A10E42847CA46003E8545 /* Views */,
 				E61A10E12847C6A5003E8545 /* Model */,
@@ -132,6 +168,7 @@
 				E65D763D2843E338008E8744 /* Sources */,
 				E65D763E2843E338008E8744 /* Frameworks */,
 				E65D763F2843E338008E8744 /* Resources */,
+				E62846482855BD310074181F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,11 +233,16 @@
 				E61A10EC2847D4F3003E8545 /* TabViewController.swift in Sources */,
 				E61A10EE2847D5F6003E8545 /* ProfileTabViewController.swift in Sources */,
 				E65D76492843E338008E8744 /* ViewController.swift in Sources */,
+				E687E69528549C2B00112823 /* Country.swift in Sources */,
 				E65D76452843E338008E8744 /* AppDelegate.swift in Sources */,
+				E64D92272853FD370027C8F4 /* DataService.swift in Sources */,
 				E65D76472843E338008E8744 /* SceneDelegate.swift in Sources */,
 				E61A10E32847C6B1003E8545 /* User.swift in Sources */,
 				E61A10DF28479EBC003E8545 /* MainViewController.swift in Sources */,
+				E65B83C02857E56000EAC694 /* ContentView.swift in Sources */,
+				E64D92242853F7B10027C8F4 /* Countries.swift in Sources */,
 				E682016A284BF44500E430AC /* Global.swift in Sources */,
+				E611EA6728587E660069D015 /* test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -322,7 +364,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -346,6 +388,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -373,6 +416,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

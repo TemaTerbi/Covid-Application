@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 final class MainViewController: UIViewController {
     
@@ -14,7 +15,6 @@ final class MainViewController: UIViewController {
     private var newCases = 0
     private let newCasesLabelColor = UIColor(hex: 0x7BB54E)
     private let imageColor = UIColor(hex: 0x25739F)
-    
     
     private lazy var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
@@ -36,7 +36,27 @@ final class MainViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = newCasesLabelColor
-        label.text = "+" + storage.string(forKey: "newCases")!
+        label.text = "+" + (storage.string(forKey: "newCases") ?? "")
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var counrtyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = imageColor
+        label.text = storage.string(forKey: "countryName")
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var countryMonthCases: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = storage.string(forKey: "monthCounryCases")
+        label.textColor = .systemGray
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textAlignment = .center
         return label
@@ -82,7 +102,56 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
-    //MARK: - Helper Methotd 
+    private lazy var countryStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [counrtyLabel, countryMonthCases])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+        stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
+        stackView.layer.cornerRadius = 15
+        return stackView
+    }()
+    
+    private lazy var updateButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.setTitle("Обновить", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.backgroundColor = imageColor
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(updateDataInLabelBtn), for: .touchUpInside)
+        return button
+    }()
+    
+    //MARK: - Helper Methotd
+    @objc private func updateDataInLabelBtn() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
+        totalLabel.text = storage.string(forKey: "totalCases")
+        newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
+        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
+        UIView.animate(withDuration: 0.1,
+            animations: {
+            self.updateButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            },
+            completion: { _ in
+                UIView.animate(withDuration: 0.1) {
+                    self.updateButton.transform = CGAffineTransform.identity
+                }
+            })
+    }
+    
+    private func updateDataInLabel() {
+        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
+        totalLabel.text = storage.string(forKey: "totalCases")
+        newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
+        counrtyLabel.text = storage.string(forKey: "countryName")
+    }
+    
     private func getResponseFromApiTotal() {
         ApiManager.shared.getTotal { globals in
             let storage = UserDefaults.standard
@@ -99,11 +168,34 @@ final class MainViewController: UIViewController {
         }
     }
     
+    private func loadResponseFromApiGetCountries() {
+        ApiManager.shared.getCounries { countries in
+            let sortedCountries = countries.sorted{$0.country ?? "" < $1.country ?? ""}
+            DataService.shared.arrayCountries = sortedCountries
+        }
+    }
+    
+    private func loadResponseFromApiGetByCountry() {
+        ApiManager.shared.getByCountry { country in
+            var result = 0
+            let allCases = country.map{$0.cases} 
+            for el in allCases {
+                result += el ?? 0
+                let stringResult = String(result)
+                UserDefaults.standard.set(stringResult, forKey: "monthCounryCases")
+            }
+        }
+    }
+    
     //MARK: - Life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadResponseFromApiGetByCountry()
         getResponseFromApiTotal()
         getResponseFromApiNewCases()
+        loadResponseFromApiGetCountries()
+        
+        updateDataInLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -121,15 +213,19 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray5
-
+        
         addSubviews()
         setupConstraints()
+        
+        updateDataInLabel()
     }
     
     private func addSubviews() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(totalInfoStackView)
         scrollView.addSubview(newCasesStackView)
+        scrollView.addSubview(countryStack)
+        scrollView.addSubview(updateButton)
     }
     
     //MARK: - Private Methods
@@ -154,7 +250,15 @@ final class MainViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-
+            
+            updateButton.topAnchor.constraint(equalTo: countryStack.bottomAnchor, constant: 10),
+            updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            updateButton.heightAnchor.constraint(equalToConstant: 50),
+        
+            countryStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            countryStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            countryStack.topAnchor.constraint(equalTo: newCasesStackView.bottomAnchor, constant: 10),
         ]
         
         NSLayoutConstraint.activate(constraints)
