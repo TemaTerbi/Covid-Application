@@ -8,6 +8,8 @@
 import Foundation
 
 
-class Test {
-    var test = DataService.shared.items
+struct Item: Identifiable {
+    let id = UUID()
+    let type: String
+    let values: Double
 }

@@ -62,17 +62,6 @@ final class ProfileTabViewController: UIViewController {
         return button
     }()
     
-    private lazy var selectCountry: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 21
-        button.setTitle("Выбрать", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        button.backgroundColor = btnColor
-        button.addTarget(self, action: #selector(selectCountryBtn), for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var header: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -114,7 +103,6 @@ final class ProfileTabViewController: UIViewController {
         self.view.addSubview(changeButton)
         self.view.addSubview(header)
         self.view.addSubview(pickerView)
-        self.view.addSubview(selectCountry)
     }
     
     //MARK: - Private Methods
@@ -150,11 +138,6 @@ final class ProfileTabViewController: UIViewController {
             pickerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             pickerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             pickerView.heightAnchor.constraint(equalToConstant: 200),
-            
-            selectCountry.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            selectCountry.bottomAnchor.constraint(equalTo: changeButton.topAnchor, constant: -5),
-            selectCountry.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            selectCountry.heightAnchor.constraint(equalToConstant: 40),
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -166,28 +149,6 @@ final class ProfileTabViewController: UIViewController {
             let allCases = country.map{$0.cases}
             DataService.shared.arrayCases = allCases
         }
-    }
-    
-    @objc private func selectCountryBtn() {
-        let indexOfCountry = pickerView.selectedRow(inComponent: 0)
-        let selectedIso = DataService.shared.arrayCountries[indexOfCountry].iso2
-        let selectedName = DataService.shared.arrayCountries[indexOfCountry].country
-        UserDefaults.standard.set(selectedIso, forKey: "selectIso")
-        UserDefaults.standard.set(selectedName, forKey: "countryName")
-        DataService.shared.boolLoop = true
-        DataService.shared.items = []
-        UIView.animate(withDuration: 0.1,
-            animations: {
-            self.selectCountry.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            },
-            completion: { _ in
-                UIView.animate(withDuration: 0.1) {
-                    self.selectCountry.transform = CGAffineTransform.identity
-                }
-            })
-        let swiftUiScreen = ContentView()
-        let hostScreen = UIHostingController(rootView: swiftUiScreen)
-        hostScreen.viewDidAppear(true)
     }
     
     @objc private func changeInfo() {
@@ -219,5 +180,14 @@ extension ProfileTabViewController: UIPickerViewDelegate, UIPickerViewDataSource
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return DataService.shared.arrayCountries[row].country
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let selectedIso = DataService.shared.arrayCountries[row].iso2
+        let selectedName = DataService.shared.arrayCountries[row].country
+        UserDefaults.standard.set(selectedIso, forKey: "selectIso")
+        UserDefaults.standard.set(selectedName, forKey: "countryName")
+        DataService.shared.boolLoop = true
+        DataService.shared.items = []
     }
 }
