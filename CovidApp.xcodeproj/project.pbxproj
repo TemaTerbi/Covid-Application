@@ -23,6 +23,7 @@
 		E65D76512843E33A008E8744 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D764F2843E33A008E8744 /* LaunchScreen.storyboard */; };
 		E682016A284BF44500E430AC /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6820169284BF44500E430AC /* Global.swift */; };
 		E687E69528549C2B00112823 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = E687E69428549C2B00112823 /* Country.swift */; };
+		E6928D27285CFD0400F37397 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6928D26285CFD0400F37397 /* TestTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,6 +58,7 @@
 		E65D76522843E33A008E8744 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6820169284BF44500E430AC /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		E687E69428549C2B00112823 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		E6928D26285CFD0400F37397 /* TestTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				E61A10DE28479EBC003E8545 /* MainViewController.swift */,
 				E61A10EB2847D4F3003E8545 /* TabViewController.swift */,
 				E61A10ED2847D5F6003E8545 /* ProfileTabViewController.swift */,
+				E6928D26285CFD0400F37397 /* TestTableViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				E61A10E32847C6B1003E8545 /* User.swift in Sources */,
 				E61A10DF28479EBC003E8545 /* MainViewController.swift in Sources */,
 				E65B83C02857E56000EAC694 /* ContentView.swift in Sources */,
+				E6928D27285CFD0400F37397 /* TestTableViewController.swift in Sources */,
 				E64D92242853F7B10027C8F4 /* Countries.swift in Sources */,
 				E682016A284BF44500E430AC /* Global.swift in Sources */,
 				E611EA6728587E660069D015 /* Item.swift in Sources */,

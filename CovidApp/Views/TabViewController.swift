@@ -15,13 +15,19 @@ final class TabViewController: UITabBarController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?.tabBar.barTintColor = UIColor.red
+        
         let MainVC = MainViewController()
         let icon1 = UITabBarItem(title: "Главная", image: UIImage(named: "HomeTab"), tag: 0)
         MainVC.tabBarItem = icon1
+        
         let ProfileVC = ProfileTabViewController()
         let icon2 = UITabBarItem(title: "Профиль", image: UIImage(named: "user"), tag: 1)
         ProfileVC.tabBarItem = icon2
+        
+        let testVc = TestTableViewController()
+        let navVC = UINavigationController(rootViewController: testVc)
+        let icon4 = UITabBarItem(title: "Тест", image: UIImage(named: "user"), tag: 1)
+        testVc.tabBarItem = icon4
         
         let swiftUiScreen = ContentView()
         let hostScreen = UIHostingController(rootView: swiftUiScreen)
@@ -30,7 +36,7 @@ final class TabViewController: UITabBarController {
         hostScreen.viewDidLoad()
         
         
-        let controllers = [MainVC, hostScreen, ProfileVC]
+        let controllers = [MainVC, hostScreen, ProfileVC, navVC]
         self.viewControllers = controllers
     }
 }
