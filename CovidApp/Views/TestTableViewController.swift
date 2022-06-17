@@ -23,23 +23,24 @@ class TestTableViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
         self.tableView.dataSource = self
+        
+        addSubviews()
+        updateLayout(with: self.view.frame.size)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+       super.viewWillTransition(to: size, with: coordinator)
+       coordinator.animate(alongsideTransition: { (contex) in
+          self.updateLayout(with: size)
+       }, completion: nil)
     }
     
     private func addSubviews() {
         self.view.addSubview(tableView)
     }
     
-    private func setupConstraints() {
-        
-        let constraints = [
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-           
-        ]
-        
-        NSLayoutConstraint.activate(constraints)
+    private func updateLayout(with size: CGSize) {
+       self.tableView.frame = CGRect.init(origin: .zero, size: size)
     }
 }
 
