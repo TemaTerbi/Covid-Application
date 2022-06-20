@@ -1,16 +1,15 @@
 //
-//  ProfileTabViewController.swift
+//  TestTableViewController.swift
 //  CovidApp
 //
-//  Created by TeRb1 on 01.06.2022.
+//  Created by TeRb1 on 17.06.2022.
 //
 
 import UIKit
-import AudioToolbox
-import SwiftUI
 
-final class ProfileTabViewController: UIViewController {
+class ProfileTab: UIViewController {
     
+    private let tableView = UITableView.init(frame: .zero)
     private let user = LoadUserData().loadUserData()
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let btnExit: UIColor = UIColor(hex: 0xF84A4A)
@@ -62,16 +61,6 @@ final class ProfileTabViewController: UIViewController {
         return button
     }()
     
-    private lazy var header: UILabel = {
-        var label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Профиль"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        label.textAlignment = .left
-        return label
-    }()
-    
     private lazy var pickerView: UIPickerView = {
         var picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -80,58 +69,66 @@ final class ProfileTabViewController: UIViewController {
         return picker
     }()
     
-
-    //MARK: - Life Cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        ContentView().enumsOfCharts = .bar
+    class TableViewCell: UITableViewCell {
     }
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
+        
+        pickerView.delegate = self
+        tableView.backgroundColor = .systemGray5
+        self.title = "Профиль"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        self.tableView.dataSource = self
         
         addSubviews()
         setupConstraints()
-        pickerView.delegate = self
+        updateLayout(with: self.view.frame.size)
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+       super.viewWillTransition(to: size, with: coordinator)
+       coordinator.animate(alongsideTransition: { (contex) in
+          self.updateLayout(with: size)
+       }, completion: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    //MARK: - Private Methodts
     private func addSubviews() {
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(ageLable)
-        self.view.addSubview(genderLable)
-        self.view.addSubview(changeButton)
-        self.view.addSubview(header)
-        self.view.addSubview(pickerView)
+        self.view.addSubview(tableView)
+        self.tableView.addSubview(nameLabel)
+        self.tableView.addSubview(ageLable)
+        self.tableView.addSubview(genderLable)
+        self.tableView.addSubview(changeButton)
+        self.tableView.addSubview(pickerView)
     }
     
-    //MARK: - Private Methods
     private func setupConstraints() {
         
         let constraints = [
-            header.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            header.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameLabel.centerYAnchor.constraint(equalTo: header.bottomAnchor, constant: 20),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             nameLabel.heightAnchor.constraint(equalToConstant: 35),
             
-            ageLable.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            ageLable.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 40),
             ageLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            ageLable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            ageLable.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
             ageLable.heightAnchor.constraint(equalToConstant: 35),
             
-            genderLable.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            genderLable.centerYAnchor.constraint(equalTo: ageLable.centerYAnchor, constant: 40),
             genderLable.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            genderLable.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            genderLable.topAnchor.constraint(equalTo: ageLable.bottomAnchor, constant: 5),
             genderLable.heightAnchor.constraint(equalToConstant: 35),
             
-            changeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            changeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
             changeButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            changeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            changeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             changeButton.heightAnchor.constraint(equalToConstant: 40),
             
             pickerView.topAnchor.constraint(equalTo: genderLable.bottomAnchor, constant: 10),
@@ -139,16 +136,11 @@ final class ProfileTabViewController: UIViewController {
             pickerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             pickerView.heightAnchor.constraint(equalToConstant: 200),
         ]
-        
         NSLayoutConstraint.activate(constraints)
-        
     }
     
-    private func loadResponseFromApiGetByCountry() {
-        ApiManager.shared.getByCountry { country in
-            let allCases = country.map{$0.cases}
-            DataService.shared.arrayCases = allCases
-        }
+    private func updateLayout(with size: CGSize) {
+       self.tableView.frame = CGRect.init(origin: .zero, size: size)
     }
     
     @objc private func changeInfo() {
@@ -156,6 +148,7 @@ final class ProfileTabViewController: UIViewController {
         generator.selectionChanged()
         let loginVC: ViewController = ViewController()
         self.show(loginVC, sender: self)
+        loginVC.modalPresentationStyle = .fullScreen
         UIView.animate(withDuration: 0.1,
             animations: {
             self.changeButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -168,8 +161,21 @@ final class ProfileTabViewController: UIViewController {
     }
 }
 
+//MARK: - Extension
+extension ProfileTab: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as! TableViewCell
+        cell.textLabel?.text = "Test cells"
+        return cell
+    }
+}
+
 //delegate for picker view
-extension ProfileTabViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension ProfileTab: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -191,3 +197,4 @@ extension ProfileTabViewController: UIPickerViewDelegate, UIPickerViewDataSource
         DataService.shared.items = []
     }
 }
+
