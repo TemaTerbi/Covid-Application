@@ -63,7 +63,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var covidImage: UIImageView = {
-        let imageCovid = UIImage(named: "covidImage")
+        let imageCovid = UIImage(systemName: "globe.asia.australia.fill")
         var image = UIImageView(image: imageCovid)
         image.contentMode = .scaleAspectFit
         image.setImageColor(color: imageColor)
@@ -71,7 +71,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var newCovid: UIImageView = {
-        let imageCovid = UIImage(named: "newMask")
+        let imageCovid = UIImage(systemName: "bandage.fill")
         var image = UIImageView(image: imageCovid)
         image.contentMode = .scaleAspectFit
         image.setImageColor(color: imageColor)

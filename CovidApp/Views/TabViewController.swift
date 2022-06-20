@@ -17,17 +17,17 @@ final class TabViewController: UITabBarController {
         super.viewWillAppear(animated)
         
         let MainVC = MainViewController()
-        let icon1 = UITabBarItem(title: "Главная", image: UIImage(named: "HomeTab"), tag: 0)
+        let icon1 = UITabBarItem(title: "Главная", image: UIImage(systemName: "homekit"), tag: 0)
         MainVC.tabBarItem = icon1
         
         let profileTab = ProfileTab()
         let profile = UINavigationController(rootViewController: profileTab)
-        let icon4 = UITabBarItem(title: "Тест", image: UIImage(named: "user"), tag: 1)
+        let icon4 = UITabBarItem(title: "Тест", image: UIImage(systemName: "person.fill"), tag: 1)
         profileTab.tabBarItem = icon4
         
         let swiftUiScreen = ContentView()
         let hostScreen = UIHostingController(rootView: swiftUiScreen)
-        let icon3 = UITabBarItem(title: "Статистика", image: UIImage(named: "stat"), tag: 2)
+        let icon3 = UITabBarItem(title: "Статистика", image: UIImage(systemName: "chart.bar.xaxis"), tag: 2)
         hostScreen.tabBarItem = icon3
         hostScreen.viewDidLoad()
         
