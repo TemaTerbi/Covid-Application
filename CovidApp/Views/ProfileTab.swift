@@ -54,11 +54,22 @@ class ProfileTab: UIViewController {
     private lazy var changeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 21
+        button.layer.cornerRadius = 10
         button.setTitle("Изменить", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         button.backgroundColor = btnColor
         button.addTarget(self, action: #selector(changeInfo), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.setTitle("Поиск", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        button.backgroundColor = btnColor
+        button.addTarget(self, action: #selector(showCountryTable), for: .touchUpInside)
         return button
     }()
     
@@ -108,6 +119,7 @@ class ProfileTab: UIViewController {
         self.tableView.addSubview(genderLable)
         self.tableView.addSubview(changeButton)
         self.tableView.addSubview(pickerView)
+        self.tableView.addSubview(searchButton)
     }
     
     private func setupConstraints() {
@@ -136,6 +148,11 @@ class ProfileTab: UIViewController {
             pickerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             pickerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             pickerView.heightAnchor.constraint(equalToConstant: 200),
+            
+            searchButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 10),
+            searchButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            searchButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            searchButton.heightAnchor.constraint(equalToConstant: 40),
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -157,6 +174,11 @@ class ProfileTab: UIViewController {
         })
     }
     
+    @objc func showCountryTable() {
+        let countryTable = CountryTableViewController()
+        show(countryTable, sender: self)
+    }
+//
     @objc private func showChangeAlert() {
         let alertController = UIAlertController(title: "Измненеие данных", message: nil, preferredStyle: .alert)
         alertController.addTextField { (textField) in
