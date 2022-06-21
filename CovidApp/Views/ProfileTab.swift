@@ -13,6 +13,7 @@ class ProfileTab: UIViewController {
     private let user = LoadUserData().loadUserData()
     private let btnColor: UIColor = UIColor(hex: 0x6F6060)
     private let btnExit: UIColor = UIColor(hex: 0xF84A4A)
+    private let storage = UserDefaults.standard
     
     private lazy var nameLabel: UILabel = {
         var label = UILabel()
@@ -89,10 +90,10 @@ class ProfileTab: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-       super.viewWillTransition(to: size, with: coordinator)
-       coordinator.animate(alongsideTransition: { (contex) in
-          self.updateLayout(with: size)
-       }, completion: nil)
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { (contex) in
+            self.updateLayout(with: size)
+        }, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,24 +141,107 @@ class ProfileTab: UIViewController {
     }
     
     private func updateLayout(with size: CGSize) {
-       self.tableView.frame = CGRect.init(origin: .zero, size: size)
+        self.tableView.frame = CGRect.init(origin: .zero, size: size)
     }
     
     @objc private func changeInfo() {
-        let generator = UISelectionFeedbackGenerator()
-        generator.selectionChanged()
-        let loginVC: ViewController = ViewController()
-        self.show(loginVC, sender: self)
-        loginVC.modalPresentationStyle = .fullScreen
+        showChangeAlert()
         UIView.animate(withDuration: 0.1,
-            animations: {
+                       animations: {
             self.changeButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            },
-            completion: { _ in
-                UIView.animate(withDuration: 0.1) {
-                    self.changeButton.transform = CGAffineTransform.identity
+        },
+                       completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.changeButton.transform = CGAffineTransform.identity
+            }
+        })
+    }
+    
+    @objc private func showChangeAlert() {
+        let alertController = UIAlertController(title: "Измненеие данных", message: nil, preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Имя"
+        }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Возраст"
+            textField.keyboardType = .numberPad
+        }
+        
+        let saveAction = UIAlertAction(title: "Сохранить", style: .default) { [weak alertController] _ in
+            guard let textFields = alertController?.textFields else { return }
+            
+            if let nameText = textFields[0].text,
+               let ageText = textFields[1].text {
+                guard nameText.isEmpty else {
+                    self.storage.set(nameText, forKey: "Name")
+                    DispatchQueue.main.async {
+                        self.nameLabel.text = self.storage.string(forKey: "Name")
+                    }
+                    guard ageText.isEmpty else {
+                        if let age = Int(ageText) {
+                            if age <= 101 {
+                                self.storage.set(age, forKey: "Age")
+                            } else {
+                                let alertController = UIAlertController(
+                                    title: "Ошибка!",
+                                    message: "Возраст не может быть больше 101!",
+                                    preferredStyle: .alert)
+                                let btnRepeat = UIAlertAction(title: "Повторить", style: .default)
+                                alertController.addAction(btnRepeat)
+                                self.present(alertController, animated: true)
+                            }
+                        } else {
+                            let alertController = UIAlertController(
+                                title: "Ошибка!",
+                                message: "Вы ввели не корректный возраст",
+                                preferredStyle: .alert)
+                            let btnRepeat = UIAlertAction(title: "Повторить", style: .default)
+                            alertController.addAction(btnRepeat)
+                            self.present(alertController, animated: true)
+                        }
+                        DispatchQueue.main.async {
+                            self.ageLable.text = self.storage.string(forKey: "Age")
+                        }
+                        return
+                    }
+                    return
                 }
-            })
+                guard ageText.isEmpty else {
+                    if let age = Int(ageText) {
+                        if age <= 101 {
+                            self.storage.set(age, forKey: "Age")
+                        } else {
+                            let alertController = UIAlertController(
+                                title: "Ошибка!",
+                                message: "Возраст не может быть больше 101!",
+                                preferredStyle: .alert)
+                            let btnRepeat = UIAlertAction(title: "Повторить", style: .default)
+                            alertController.addAction(btnRepeat)
+                            self.present(alertController, animated: true)
+                        }
+                    } else {
+                        let alertController = UIAlertController(
+                            title: "Ошибка!",
+                            message: "Вы ввели не корректный возраст",
+                            preferredStyle: .alert)
+                        let btnRepeat = UIAlertAction(title: "Повторить", style: .default)
+                        alertController.addAction(btnRepeat)
+                        self.present(alertController, animated: true)
+                    }
+                    DispatchQueue.main.async {
+                        self.ageLable.text = self.storage.string(forKey: "Age")
+                    }
+                    return
+                }
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Отмена", style: .destructive)
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
     }
 }
 
