@@ -22,7 +22,7 @@ final class TabViewController: UITabBarController {
         
         let profileTab = ProfileTab()
         let profile = UINavigationController(rootViewController: profileTab)
-        let icon4 = UITabBarItem(title: "Тест", image: UIImage(systemName: "person.fill"), tag: 1)
+        let icon4 = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.fill"), tag: 1)
         profileTab.tabBarItem = icon4
         
         let swiftUiScreen = ContentView()

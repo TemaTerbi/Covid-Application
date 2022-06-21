@@ -180,7 +180,7 @@ class ProfileTab: UIViewController {
     }
 //
     @objc private func showChangeAlert() {
-        let alertController = UIAlertController(title: "Измненеие данных", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Изменение данных", message: "Введите новые данные", preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.placeholder = "Имя"
         }
