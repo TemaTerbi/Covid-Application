@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct Item: Identifiable {
-    let id = UUID()
-    let type: String
-    let values: Double
-}
-
 final class DataService {
     static let shared = DataService()
     

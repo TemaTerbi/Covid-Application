@@ -63,7 +63,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var covidImage: UIImageView = {
-        let imageCovid = UIImage(named: "covidImage")
+        let imageCovid = UIImage(systemName: "globe.asia.australia.fill")
         var image = UIImageView(image: imageCovid)
         image.contentMode = .scaleAspectFit
         image.setImageColor(color: imageColor)
@@ -71,7 +71,7 @@ final class MainViewController: UIViewController {
     }()
     
     private lazy var newCovid: UIImageView = {
-        let imageCovid = UIImage(named: "newMask")
+        let imageCovid = UIImage(systemName: "bandage.fill")
         var image = UIImageView(image: imageCovid)
         image.contentMode = .scaleAspectFit
         image.setImageColor(color: imageColor)
@@ -114,41 +114,8 @@ final class MainViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var updateButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 10
-        button.setTitle("Обновить", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        button.backgroundColor = imageColor
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(updateDataInLabelBtn), for: .touchUpInside)
-        return button
-    }()
-    
     //MARK: - Helper Methotd
-    @objc private func updateDataInLabelBtn() {
-        let generator = UISelectionFeedbackGenerator()
-        generator.selectionChanged()
-        totalLabel.text = storage.string(forKey: "totalCases")
-        newCasesLabel.text = "+" + storage.string(forKey: "newCases")!
-        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
-        UIView.animate(withDuration: 0.1,
-            animations: {
-            self.updateButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            },
-            completion: { _ in
-                UIView.animate(withDuration: 0.1) {
-                    self.updateButton.transform = CGAffineTransform.identity
-                }
-            })
-    }
-    
     private func updateDataInLabel() {
-        countryMonthCases.text = storage.string(forKey: "monthCounryCases")
-        totalLabel.text = storage.string(forKey: "totalCases")
-        newCasesLabel.text = "+" + (storage.string(forKey: "newCases") ?? "")
         counrtyLabel.text = storage.string(forKey: "countryName")
     }
     
@@ -157,6 +124,9 @@ final class MainViewController: UIViewController {
             let storage = UserDefaults.standard
             self.totalConfirmed = (globals.global?.totalConfirmed)!
             storage.set(self.totalConfirmed, forKey: "totalCases")
+            DispatchQueue.main.async {
+                self.totalLabel.text = self.storage.string(forKey: "totalCases")
+            }
         }
     }
     
@@ -165,6 +135,9 @@ final class MainViewController: UIViewController {
             let storage = UserDefaults.standard
             self.newCases = (globals.global?.newConfirmed)!
             storage.set(self.newCases, forKey: "newCases")
+            DispatchQueue.main.async {
+                self.newCasesLabel.text = "+" + (self.storage.string(forKey: "newCases") ?? "")
+            }
         }
     }
     
@@ -183,6 +156,9 @@ final class MainViewController: UIViewController {
                 result += el ?? 0
                 let stringResult = String(result)
                 UserDefaults.standard.set(stringResult, forKey: "monthCounryCases")
+            }
+            DispatchQueue.main.async {
+                self.countryMonthCases.text = self.storage.string(forKey: "monthCounryCases")
             }
         }
     }
@@ -225,7 +201,6 @@ final class MainViewController: UIViewController {
         scrollView.addSubview(totalInfoStackView)
         scrollView.addSubview(newCasesStackView)
         scrollView.addSubview(countryStack)
-        scrollView.addSubview(updateButton)
     }
     
     //MARK: - Private Methods
@@ -250,11 +225,6 @@ final class MainViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            updateButton.topAnchor.constraint(equalTo: countryStack.bottomAnchor, constant: 10),
-            updateButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            updateButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            updateButton.heightAnchor.constraint(equalToConstant: 50),
         
             countryStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             countryStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
